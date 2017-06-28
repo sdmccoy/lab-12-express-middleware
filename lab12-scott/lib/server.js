@@ -12,7 +12,12 @@ app.use(require('../route/hike-router.js'));
 //allow the server to respond with the error middleware message
 app.use(require('./error-middleware.js'));
 
+app.all('/api/*', (req, res, next) => {
+  res.sendStatus(404);
+});
+
 let server;
+
 //start server on off controller and make it importable
 const serverControl = module.exports = {};
 

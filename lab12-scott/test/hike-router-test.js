@@ -57,6 +57,42 @@ describe('START OF TESTING FOR /api/hike\n', () => {
         });
       });
     });
+  });
+
+  describe('Testing GET request\n', () => {
+    //clear the db after each test
+    after(() => Hike.remove({}));
+    before(() => {
+      return new Hike({
+        name: 'pacific crest trail',
+        rating: 7,
+        lat: 1233.211,
+        lon: 32.5564,
+      })
+      .save()
+      .then(hike => tempHike = hike);
+    });
+    describe('if successful\n', () => {
+      it('it should respond with a specific hike', () => {
+        return superagent.get(`${API_URL}/api/hike/${tempHike._id}`)
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body._id).toExist();
+          expect(res.body.name).toEqual('pacific crest trail');
+          expect(res.body.rating).toEqual(7);
+          expect(res.body.lat).toEqual(1233.211);
+          expect(res.body.lon).toEqual(32.5564);
+        });
+      });
+    });
+    describe('if the id is not found\n', () => {
+      it('it should return a 404 status', () => {
+        return superagent.get(`${API_URL}/api/hike/3523`)
+        .catch(res => {
+          expect(res.status).toEqual(404);
+        });
+      });
+    });
 
   });
 });

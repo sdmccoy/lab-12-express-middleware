@@ -7,8 +7,8 @@ module.exports = (err, req, res, next) => {
   if (err.message.toLowerCase().includes('validation failed')) return res.sendStatus(400);
   //for entering in a non unique value
   if (err.message.toLowerCase().includes('duplicate key')) return res.sendStatus(409);
+  //if no id is found
+  if (err.message.toLowerCase().includes('objectid failed')) return res.sendStatus(404);
   //else send back a 500 which is server error
   res.sendStatus(500);
 };
-
-//404 status is on the server.js to catch all of the bad url requests before hitting hike router
