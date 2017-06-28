@@ -11,7 +11,7 @@ const server = require('../lib/server.js');
 
 let tempHike;
 
-describe('\nSTART OF TESTING FOR /api/hike\n', () => {
+describe('START OF TESTING FOR /api/hike\n', () => {
   //start and stop server after each
   before(server.start);
   after(server.stop);
@@ -25,7 +25,7 @@ describe('\nSTART OF TESTING FOR /api/hike\n', () => {
       lat: 1233.211,
       lon: 32.5564,
     };
-    describe('if successful', () => {
+    describe('if successful\n', () => {
       it('it should return with a new hike', () => {
         return superagent.post(`${API_URL}/api/hike`)
         .send(data)
@@ -39,7 +39,7 @@ describe('\nSTART OF TESTING FOR /api/hike\n', () => {
         });
       });
     });
-    describe('if passing in invalid body', () => {
+    describe('if passing in invalid body\n', () => {
       it('it should return a 400 status', () => {
         return superagent.post(`${API_URL}/api/hike`)
         .send()
@@ -48,7 +48,7 @@ describe('\nSTART OF TESTING FOR /api/hike\n', () => {
         });
       });
     });
-    describe('if passing in conflicting unique value {name}', () => {
+    describe('if passing in conflicting unique value {name}\n', () => {
       it('it should return a 409 status', () => {
         return superagent.post(`${API_URL}/api/hike`)
         .send(data)

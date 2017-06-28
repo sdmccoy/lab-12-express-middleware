@@ -5,7 +5,7 @@ const jsonParser = require('body-parser').json();
 const Hike = require('../model/hike.js');
 
 
-const hikeRouter = module.exports = new Router();
+let hikeRouter = module.exports = new Router();
 
 hikeRouter.post('/api/hike', jsonParser,  (req, res, next) => {
   console.log('Hit POST router');

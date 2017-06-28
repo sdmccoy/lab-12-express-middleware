@@ -7,6 +7,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URI);
 
+//allow our server to recognize all of our routes
+app.use(require('../route/hike-router.js'));
+
+
 let server;
 //start server on off controller and make it importable
 const serverControl = module.exports = {};
@@ -19,6 +23,7 @@ serverControl.start = () => {
         console.log('server up on', process.env.PORT);
         resolve();
       });
+      return;
     }
     reject();
   });
@@ -32,6 +37,7 @@ serverControl.stop = () => {
         console.log('server', process.env.PORT, 'shut down');
         resolve();
       });
+      return;
     }
     reject();
   });
