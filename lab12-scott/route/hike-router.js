@@ -22,3 +22,14 @@ hikeRouter.get('/api/hike/:id', (req, res, next) => {
   .then(hike => res.json(hike))
   .catch(next);
 });
+
+hikeRouter.put('/api/hike/:id', jsonParser, (req, res, next) => {
+  console.log('Hit the PUT route');
+  let options = {
+    runValidators: true,
+    new: true,
+  };
+  Hike.findByIdAndUpdate(req.params.id, req.body, options)
+  .then(updatedHike => res.json(updatedHike))
+  .catch(next);
+});

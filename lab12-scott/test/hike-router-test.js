@@ -95,4 +95,81 @@ describe('START OF TESTING FOR /api/hike\n', () => {
     });
 
   });
+  describe('Testing PUT request\n', () => {
+    //clear the db after each test
+    after(() => Hike.remove({}));
+    before(() => {
+      return new Hike({
+        name: 'pacific crest trail',
+        rating: 7,
+        lat: 1233.211,
+        lon: 32.5564,
+      })
+      .save()
+      .then(hike => tempHike = hike);
+    });
+    describe('if successful\n', () => {
+      it('it should respond with a specific hike', () => {
+        return superagent.put(`${API_URL}/api/hike/${tempHike._id}`)
+        .send({rating: 10, lat: 234.32})
+        .then(res => {
+          console.log(tempHike);
+          expect(res.status).toEqual(200);
+          expect(res.body._id).toExist();
+          expect(res.body.name).toEqual(tempHike.name);
+          expect(res.body.rating).toEqual(10);
+          expect(res.body.lat).toEqual(234.32);
+          expect(res.body.lon).toEqual(tempHike.lon);
+        });
+      });
+    });
+    describe('if the id is not found\n', () => {
+      it('it should return a 404 status', () => {
+        return superagent.put(`${API_URL}/api/hike/3523`)
+        .catch(res => {
+          expect(res.status).toEqual(404);
+        });
+      });
+    });
+    describe('if the no or bad content is passed through\n', () => {
+      it('it should return a 400 status', () => {
+        return superagent.put(`${API_URL}/api/hike/${tempHike._id}`)
+        .send('gibberish')
+        .catch(res => {
+          expect(res.status).toEqual(400);
+        });
+      });
+    });
+  });
+  describe('Testing DELETE request\n', () => {
+    //clear the db after each test
+    after(() => Hike.remove({}));
+    before(() => {
+      return new Hike({
+        name: 'pacific crest trail',
+        rating: 7,
+        lat: 1233.211,
+        lon: 32.5564,
+      })
+      .save()
+      .then(hike => tempHike = hike);
+    });
+    describe('if successful\n', () => {
+      it('it should respond with a 202 and no content', () => {
+        return superagent.delete(`${API_URL}/api/hike/${tempHike._id}`)
+        .then(res => {
+          expect(res.status).toEqual(204);
+          expect(res.body._id).toNotExist();
+        });
+      });
+    });
+    describe('if the id is not found\n', () => {
+      it('it should return a 404 status', () => {
+        return superagent.delete(`${API_URL}/api/hike/3523`)
+        .catch(res => {
+          expect(res.status).toEqual(404);
+        });
+      });
+    });
+  });
 });
