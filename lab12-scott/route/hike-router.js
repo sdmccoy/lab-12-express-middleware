@@ -33,3 +33,10 @@ hikeRouter.put('/api/hike/:id', jsonParser, (req, res, next) => {
   .then(updatedHike => res.json(updatedHike))
   .catch(next);
 });
+
+hikeRouter.delete('/api/hike/:id', (req, res, next) => {
+  console.log('Hit the DELETE route');
+  Hike.findByIdAndRemove(req.params.id)
+  .then(() => res.sendStatus(204))
+  .catch(next);
+});

@@ -113,7 +113,6 @@ describe('START OF TESTING FOR /api/hike\n', () => {
         return superagent.put(`${API_URL}/api/hike/${tempHike._id}`)
         .send({rating: 10, lat: 234.32})
         .then(res => {
-          console.log(tempHike);
           expect(res.status).toEqual(200);
           expect(res.body._id).toExist();
           expect(res.body.name).toEqual(tempHike.name);
@@ -155,7 +154,7 @@ describe('START OF TESTING FOR /api/hike\n', () => {
       .then(hike => tempHike = hike);
     });
     describe('if successful\n', () => {
-      it('it should respond with a 202 and no content', () => {
+      it('it should respond with a 204 and no content', () => {
         return superagent.delete(`${API_URL}/api/hike/${tempHike._id}`)
         .then(res => {
           expect(res.status).toEqual(204);
