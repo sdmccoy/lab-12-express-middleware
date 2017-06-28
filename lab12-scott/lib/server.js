@@ -3,7 +3,9 @@
 const express = require('express');
 const app = express();
 
-// const mongoose = mongoose.connect(MONGODB_URI);
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
+mongoose.connect(process.env.MONGODB_URI);
 
 let server;
 //start server on off controller and make it importable

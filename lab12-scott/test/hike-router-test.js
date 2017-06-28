@@ -13,8 +13,8 @@ let tempHike;
 
 describe('\nSTART OF TESTING FOR /api/hike\n', () => {
   //start and stop server after each
-  before(server.start());
-  after(server.stop());
+  before(server.start);
+  after(server.stop);
 
   describe('Testing POST request\n', () => {
     //clear the db after each test
