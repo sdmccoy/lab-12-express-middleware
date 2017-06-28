@@ -9,7 +9,8 @@ mongoose.connect(process.env.MONGODB_URI);
 
 //allow our server to recognize all of our routes
 app.use(require('../route/hike-router.js'));
-
+//allow the server to respond with the error middleware message
+app.use(require('./error-middleware.js'));
 
 let server;
 //start server on off controller and make it importable
